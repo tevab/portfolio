@@ -6,20 +6,6 @@ export default function Admin({ posts }) {
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(false);
 
-    let test = [
-        {
-            status: 200,
-            data: [
-                { _id: '63c2ea80c390432747547315', title: '1', content: '1' },
-                {
-                    _id: '63c2ebc8465c962959061b4d',
-                    title: 'test',
-                    content: 'adada',
-                },
-            ],
-        },
-    ];
-
     useEffect(() => {
         setPostsState(posts.data);
     }, [posts]);
