@@ -16,50 +16,51 @@ const Logo = styled(Link)`
 
 const Title = styled.h1`
     font-size: 20px;
-    max-width: ${(props) => (props.showTitle ? '99999px' : 0)};
-    width: ${(props) => (props.showTitle ? 'auto' : 0)};
     display: inline-block;
-    transition: max-width ${menuSpeed * 2}ms ease-in-out;
     height: 5px;
-    opacity: ${(props) => (props.showTitle ? 1 : 0)};
+    width: ${(props) =>
+        props.fadeOut
+            ? 0
+            : props.page === 'work'
+            ? '82px'
+            : props.page === 'about'
+            ? '85px'
+            : props.page === 'resume'
+            ? '72px'
+            : 0};
+    opacity: ${(props) => (props.fadeOut ? 0 : 1)};
+    transition: all ${menuSpeed}ms ease-in-out;
 `;
 
 const Header = (props) => {
     const { setOpenMenu, page } = useContext(AppContext);
     const [title, setTitle] = useState('');
-    const [showTitle, setShowtitle] = useState(null);
+    const [fadeOut, setFadeOut] = useState(false);
 
     useEffect(() => {
+        setFadeOut(true);
         setTimeout(() => {
             if (page === 'about') {
                 setTitle(' / About Me');
             } else if (page === 'work') {
                 setTitle(' / My Work');
             } else if (page === 'resume') {
-                setTitle(' / R');
+                setTitle(' / Resume');
             } else {
                 setTitle('');
             }
-        }, menuSpeed);
-
-        console.log(title.length > 0);
-
-        if (title.length === 0) {
-            setShowtitle(false);
-        } else {
-            setShowtitle(false);
             setTimeout(() => {
-                setShowtitle(true);
-            }, menuSpeed);
-        }
-    }, [page, title]);
+                setFadeOut(false);
+            }, 400);
+        }, menuSpeed);
+    }, [page]);
 
     return (
         <div className={props.className}>
             <Menu />
             <Logo href='/' onClick={() => setOpenMenu(false)}>
                 Teva Barzilay{' '}
-                <Title showTitle={showTitle}>
+                <Title page={page} fadeOut={fadeOut}>
                     <span style={{ whiteSpace: 'nowrap' }}>{title}</span>
                 </Title>
             </Logo>
