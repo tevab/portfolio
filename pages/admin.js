@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+    Wrapper,
+    Column,
+    TextField,
+    StyledTextArea,
+    StyledButton,
+} from '../styles/Theme';
 
 export default function Admin({ posts }) {
     const [postsState, setPostsState] = useState([]);
@@ -38,85 +45,86 @@ export default function Admin({ posts }) {
     };
 
     return (
-        <div className='container'>
-            <div>
-                <div>
-                    {postsState.map((post, index) => {
-                        return (
-                            <div className='card' key={index}>
-                                <h2>
-                                    <Link href={`${post.url}`} target='_blank'>
-                                        {post.title}
-                                    </Link>
-                                </h2>
-                                <p>{post.content}</p>
-                                <p>
-                                    <Image
-                                        src={post.image}
-                                        alt={post.title}
-                                        width={100}
-                                        height={100}
-                                    />
-                                </p>
-                                <p>{post.stack}</p>
-                                <p>{post.date}</p>
-                            </div>
-                        );
-                    })}
-                </div>
+        <Wrapper variant='flex'>
+            <Column variant='wide'>
+                {postsState.map((post, index) => {
+                    return (
+                        <div className='card' key={index}>
+                            <h2>
+                                <Link href={`${post.url}`} target='_blank'>
+                                    {post.title}
+                                </Link>
+                            </h2>
+                            <p>{post.content}</p>
+                            <p>
+                                <Image
+                                    src={post.image}
+                                    alt={post.title}
+                                    width={100}
+                                    height={100}
+                                />
+                            </p>
+                            <p>{post.stack}</p>
+                            <p>{post.date}</p>
+                        </div>
+                    );
+                })}
+            </Column>
 
-                <div className='add-form'>
-                    <form onSubmit={submitForm}>
-                        <input
-                            type='text'
-                            name='title'
-                            placeholder='Title'
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <textarea
-                            type='text'
-                            name='content'
-                            rows='10'
-                            placeholder='Content'
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                        />
-                        <input
-                            type='text'
-                            name='image'
-                            placeholder='Image URL'
-                            value={image}
-                            onChange={(e) => setImage(e.target.value)}
-                        />
-                        <input
-                            type='text'
-                            name='url'
-                            placeholder='URL'
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                        />
-                        <input
-                            type='text'
-                            name='stack'
-                            placeholder='Stack'
-                            value={stack}
-                            onChange={(e) => setStack(e.target.value)}
-                        />
-                        <input
-                            type='text'
-                            name='date'
-                            placeholder='Date'
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                        />
-                        <button type='submit' disabled={loading ? true : false}>
-                            {loading ? 'Adding' : 'Add'}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+            <Column variant='narrow'>
+                <form onSubmit={submitForm}>
+                    <TextField
+                        type='text'
+                        name='title'
+                        placeholder='Title'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <StyledTextArea
+                        type='text'
+                        name='content'
+                        rows='10'
+                        placeholder='Content'
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                    />
+                    <TextField
+                        type='text'
+                        name='image'
+                        placeholder='Image URL'
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                    />
+                    <TextField
+                        type='text'
+                        name='url'
+                        placeholder='URL'
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                    />
+                    <TextField
+                        type='text'
+                        name='stack'
+                        placeholder='Stack'
+                        value={stack}
+                        onChange={(e) => setStack(e.target.value)}
+                    />
+                    <TextField
+                        type='text'
+                        name='date'
+                        placeholder='Date'
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                    />
+                    <StyledButton
+                        type='submit'
+                        disabled={loading ? true : false}
+                    >
+                        {loading ? 'Adding' : 'Add'}
+                    </StyledButton>
+                </form>
+            </Column>
+        </Wrapper>
     );
 }
 
