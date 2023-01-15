@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
                 ? '#28c5b0'
                 : props.page === 'about'
                 ? '#8BC528'
-                : props.page === 'contact'
+                : props.page === 'resume'
                 ? '#6228C5'
                 : null};
         padding: 0;
@@ -106,8 +106,8 @@ const Layout = ({ children }) => {
             setPage('work');
         } else if (location.pathname === '/about') {
             setPage('about');
-        } else if (location.pathname === '/contact') {
-            setPage('contact');
+        } else if (location.pathname === '/resume') {
+            setPage('resume');
         } else {
             setPage('home');
         }
@@ -115,7 +115,7 @@ const Layout = ({ children }) => {
 
     return (
         <>
-            <AppContext.Provider value={{ openMenu, setOpenMenu }}>
+            <AppContext.Provider value={{ openMenu, setOpenMenu, page }}>
                 <GlobalStyle page={page} />
                 <PageWrapper>
                     <PageBorder>

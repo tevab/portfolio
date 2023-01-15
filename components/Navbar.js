@@ -85,8 +85,8 @@ const Navbar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink href='/contact' onClick={() => setOpenMenu(false)}>
-                        Contact
+                    <NavLink href='/resume' onClick={() => setOpenMenu(false)}>
+                        Resume
                     </NavLink>
                 </li>
             </StyledNavbar>
