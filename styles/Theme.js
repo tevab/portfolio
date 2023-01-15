@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { variant } from 'styled-system';
+import { insidePadding, headerHeight, hoverSpeed } from './GlobalVariables';
 
 export const Wrapper = styled('div')(
     {
@@ -16,12 +17,18 @@ export const Wrapper = styled('div')(
             },
             flex: {
                 display: 'flex',
+                overflow: 'hidden',
             },
         },
     })
 );
 
 export const Column = styled('div')(
+    {
+        padding: insidePadding,
+        paddingTop: headerHeight + insidePadding,
+        overflow: 'auto',
+    },
     variant({
         variants: {
             wide: {
@@ -34,8 +41,32 @@ export const Column = styled('div')(
     })
 );
 
-export const TextField = styled.input``;
+const InputStyle = {
+    display: 'block',
+    marginBottom: 10,
+    padding: 14,
+    width: '100%',
+    border: '1px solid white',
+    backgroundColor: 'transparent',
+    color: 'white',
+    '&::placeholder': {
+        color: 'white',
+        fontFamily: 'Maven Pro',
+    },
+};
 
-export const StyledTextArea = styled.textarea``;
+export const TextField = styled.input(InputStyle);
 
-export const StyledButton = styled.button``;
+export const StyledTextArea = styled.textarea(InputStyle);
+
+export const StyledButton = styled.button`
+    padding: 14px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    transition: all ${hoverSpeed}ms ease-in-out;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+`;

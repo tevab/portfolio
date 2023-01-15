@@ -8,6 +8,23 @@ import {
     StyledTextArea,
     StyledButton,
 } from '../styles/Theme';
+import styled from 'styled-components';
+import { insidePadding, hoverSpeed } from '../styles/GlobalVariables';
+
+const Card = styled(Link)`
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: ${insidePadding}px;
+    margin-bottom: ${insidePadding}px;
+    display: block;
+    color: white;
+    text-decoration: none;
+    transition: all ${hoverSpeed}ms ease-in-out;
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+`;
+
+const Title = styled(Link)``;
 
 export default function Admin({ posts }) {
     const [postsState, setPostsState] = useState([]);
@@ -49,12 +66,8 @@ export default function Admin({ posts }) {
             <Column variant='wide'>
                 {postsState.map((post, index) => {
                     return (
-                        <div className='card' key={index}>
-                            <h2>
-                                <Link href={`${post.url}`} target='_blank'>
-                                    {post.title}
-                                </Link>
-                            </h2>
+                        <Card href={`${post.url}`} target='_blank' key={index}>
+                            <h2 style={{ margin: 0 }}>{post.title}</h2>
                             <p>{post.content}</p>
                             <p>
                                 <Image
@@ -66,12 +79,13 @@ export default function Admin({ posts }) {
                             </p>
                             <p>{post.stack}</p>
                             <p>{post.date}</p>
-                        </div>
+                        </Card>
                     );
                 })}
             </Column>
 
             <Column variant='narrow'>
+                <h2>Add items:</h2>
                 <form onSubmit={submitForm}>
                     <TextField
                         type='text'
@@ -120,7 +134,7 @@ export default function Admin({ posts }) {
                         type='submit'
                         disabled={loading ? true : false}
                     >
-                        {loading ? 'Adding' : 'Add'}
+                        {loading ? 'Adding Item' : 'Add Item'}
                     </StyledButton>
                 </form>
             </Column>
