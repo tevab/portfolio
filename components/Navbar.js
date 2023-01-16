@@ -19,7 +19,6 @@ const StyledNavbar = styled.ul`
     margin: -${insidePadding}px;
     width: 100%;
     height: calc(100vh - ${outsidePadding}px - ${footerHeight}px);
-    // height: 100vh;
     display: flex;
     flex-direction: column;
     align-content: center;

@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { variant } from 'styled-system';
-import { insidePadding, headerHeight, hoverSpeed } from './GlobalVariables';
+import {
+    insidePadding,
+    outsidePadding,
+    headerHeight,
+    footerHeight,
+    hoverSpeed,
+} from './GlobalVariables';
 
 export const Wrapper = styled('div')(
     {
@@ -19,6 +25,12 @@ export const Wrapper = styled('div')(
                 display: 'flex',
                 overflow: 'hidden',
             },
+            work: {
+                position: 'relative',
+                display: 'flex',
+                overflow: 'hidden',
+                height: '100%',
+            },
         },
     })
 );
@@ -36,6 +48,18 @@ export const Column = styled('div')(
             },
             narrow: {
                 width: '30%',
+            },
+            wideWork: {
+                width: '66%',
+                padding: 0,
+                height: `calc(100vh - ${outsidePadding}px - ${footerHeight}px - 2px)`,
+            },
+            narrowWork: {
+                width: '30%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                padding: insidePadding,
             },
         },
     })
