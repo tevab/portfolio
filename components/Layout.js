@@ -1,12 +1,13 @@
 import Head from 'next/head';
 import styled, { createGlobalStyle } from 'styled-components';
-import { createContext, useLayoutEffect, useState } from 'react';
+import { createContext, useLayoutEffect, useState, useContext } from 'react';
 import {
     outsidePadding,
     insidePadding,
     headerHeight,
     footerHeight,
     menuSpeed,
+    Colors,
 } from '../styles/GlobalVariables';
 import Footer from './Footer';
 import Header from './Header';
@@ -19,17 +20,17 @@ const GlobalStyle = createGlobalStyle`
     body {
         background-color: ${(props) =>
             props.page === 'home'
-                ? '#C5283D'
+                ? props.colors.backgrounds.home
                 : props.page === 'work'
-                ? '#28c5b0'
+                ? props.colors.backgrounds.work
                 : props.page === 'about'
-                ? '#8BC528'
+                ? props.colors.backgrounds.about
                 : props.page === 'resume'
-                ? '#6228C5'
+                ? props.colors.backgrounds.resume
                 : null};
         padding: 0;
         margin: 0;
-        color: #fff;
+        color: ${(props) => props.colors.fonts.text};
         font-family: 'Maven Pro';
         transition: background-color ${menuSpeed}ms ease-in-out;
     }
@@ -48,7 +49,7 @@ const PageWrapper = styled.div`
 `;
 
 const PageBorder = styled.div`
-    border: 6px solid #fff;
+    border: 6px solid ${(props) => props.colors.borders};
     height: 100vh;
     position: relative;
     overflow: hidden;
@@ -92,13 +93,14 @@ const StyledFooter = styled(Footer)`
     padding: ${insidePadding}px;
     height: ${footerHeight}px;
     font-size: 12px;
-    color: #fff;
+    color: ${(props) => props.colors.text};
 `;
 
 const Layout = ({ children }) => {
     const [openMenu, setOpenMenu] = useState(false);
     const [page, setPage] = useState('home');
 
+    const colors = useContext(Colors);
     const router = useRouter();
 
     useLayoutEffect(() => {
@@ -116,9 +118,9 @@ const Layout = ({ children }) => {
     return (
         <>
             <AppContext.Provider value={{ openMenu, setOpenMenu, page }}>
-                <GlobalStyle page={page} />
+                <GlobalStyle page={page} colors={colors} />
                 <PageWrapper>
-                    <PageBorder>
+                    <PageBorder colors={colors}>
                         <Head>
                             <title>Teva Barzilay</title>
                             <meta
@@ -132,7 +134,7 @@ const Layout = ({ children }) => {
                         </Head>
                         <StyledHeader />
                         <StyledMainContainer>{children}</StyledMainContainer>
-                        <StyledFooter />
+                        <StyledFooter colors={colors} />
                     </PageBorder>
                 </PageWrapper>
             </AppContext.Provider>

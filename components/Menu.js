@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { AppContext } from './Layout';
 import styled from 'styled-components';
-import { menuSpeed } from '@/styles/GlobalVariables';
+import { menuSpeed, Colors } from '@/styles/GlobalVariables';
 import Navbar from './Navbar';
 
 const StyledMenu = styled.div`
-    background: #fff;
+    background: ${(props) => props.colors.borders};
     height: 100px;
     width: 100px;
     transform: scale(${(props) => (props.openMenu ? 100 : 1)});
@@ -15,6 +15,8 @@ const StyledMenu = styled.div`
 
 const Menu = () => {
     const { openMenu, setOpenMenu } = useContext(AppContext);
+
+    const colors = useContext(Colors);
 
     return (
         <>
@@ -29,6 +31,7 @@ const Menu = () => {
                 <StyledMenu
                     onClick={() => setOpenMenu(!openMenu)}
                     openMenu={openMenu}
+                    colors={colors}
                 />
             </div>
             <Navbar openMenu={openMenu} />

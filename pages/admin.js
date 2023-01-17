@@ -1,30 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-    Wrapper,
-    Column,
-    TextField,
-    StyledTextArea,
-    StyledButton,
-} from '../styles/Theme';
+import { Wrapper, Column, StyledInput } from '../styles/Theme';
 import styled from 'styled-components';
-import { insidePadding, hoverSpeed } from '../styles/GlobalVariables';
+import { insidePadding, hoverSpeed, Colors } from '../styles/GlobalVariables';
 
 const Card = styled(Link)`
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: ${(props) => props.colors.fonts.text}1a;
     padding: ${insidePadding}px;
     margin-bottom: ${insidePadding}px;
     display: block;
-    color: white;
+    color: ${(props) => props.colors.fonts.text};
     text-decoration: none;
     transition: all ${hoverSpeed}ms ease-in-out;
     &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: ${(props) => props.colors.fonts.text}33;
     }
 `;
 
-const Title = styled(Link)``;
+export const StyledButton = styled.button`
+    padding: 14px;
+    border: none;
+    background-color: ${(props) => props.colors.black}33;
+    color: ${(props) => props.colors.fonts.text};
+    transition: all ${hoverSpeed}ms ease-in-out;
+    cursor: pointer;
+    &:hover {
+        background-color: ${(props) => props.colors.black}66;
+    }
+`;
 
 export default function Admin({ posts }) {
     const [postsState, setPostsState] = useState([]);
@@ -35,6 +39,8 @@ export default function Admin({ posts }) {
     const [stack, setStack] = useState('');
     const [date, setDate] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const colors = useContext(Colors);
 
     useEffect(() => {
         setPostsState(posts.data);
@@ -66,7 +72,12 @@ export default function Admin({ posts }) {
             <Column variant='wide'>
                 {postsState.map((post, index) => {
                     return (
-                        <Card href={`${post.url}`} target='_blank' key={index}>
+                        <Card
+                            href={`${post.url}`}
+                            target='_blank'
+                            key={index}
+                            colors={colors}
+                        >
                             <h2 style={{ margin: 0 }}>{post.title}</h2>
                             <p>{post.content}</p>
                             <p>
@@ -87,52 +98,66 @@ export default function Admin({ posts }) {
             <Column variant='narrow'>
                 <h2>Add items:</h2>
                 <form onSubmit={submitForm}>
-                    <TextField
+                    <StyledInput
+                        as='input'
                         type='text'
                         name='title'
                         placeholder='Title'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        colors={colors}
                     />
-                    <StyledTextArea
+                    <StyledInput
+                        as='textarea'
                         type='text'
                         name='content'
                         rows='10'
                         placeholder='Content'
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
+                        colors={colors}
                     />
-                    <TextField
+                    <StyledInput
+                        as='input'
                         type='text'
                         name='image'
                         placeholder='Image URL'
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
+                        colors={colors}
                     />
-                    <TextField
+                    <StyledInput
+                        as='input'
                         type='text'
                         name='url'
                         placeholder='URL'
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
+                        colors={colors}
                     />
-                    <TextField
+                    <StyledInput
+                        as='input'
                         type='text'
                         name='stack'
                         placeholder='Stack'
                         value={stack}
                         onChange={(e) => setStack(e.target.value)}
+                        colors={colors}
                     />
-                    <TextField
+                    <StyledInput
+                        as='input'
                         type='text'
                         name='date'
                         placeholder='Date'
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
+                        colors={colors}
                     />
                     <StyledButton
+                        as='button'
                         type='submit'
                         disabled={loading ? true : false}
+                        colors={colors}
                     >
                         {loading ? 'Adding Item' : 'Add Item'}
                     </StyledButton>

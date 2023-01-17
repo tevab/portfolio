@@ -3,14 +3,14 @@ import Menu from './Menu';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { AppContext } from './Layout';
-import { menuSpeed } from '@/styles/GlobalVariables';
+import { menuSpeed, Colors } from '@/styles/GlobalVariables';
 
 const Logo = styled(Link)`
     mix-blend-mode: difference;
     margin-top: 0;
     margin-bottom: 0;
     display: inline;
-    color: #fff;
+    color: ${(props) => props.colors.fonts.text};
     text-decoration: none;
 `;
 
@@ -37,6 +37,8 @@ const Header = (props) => {
     const [title, setTitle] = useState('');
     const [fadeOut, setFadeOut] = useState(false);
 
+    const colors = useContext(Colors);
+
     useEffect(() => {
         setFadeOut(true);
         setTimeout(() => {
@@ -58,7 +60,7 @@ const Header = (props) => {
     return (
         <div className={props.className}>
             <Menu />
-            <Logo href='/' onClick={() => setOpenMenu(false)}>
+            <Logo href='/' onClick={() => setOpenMenu(false)} colors={colors}>
                 Teva Barzilay{' '}
                 <Title page={page} fadeOut={fadeOut}>
                     <span style={{ whiteSpace: 'nowrap' }}>{title}</span>

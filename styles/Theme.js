@@ -65,32 +65,16 @@ export const Column = styled('div')(
     })
 );
 
-const InputStyle = {
-    display: 'block',
-    marginBottom: 10,
-    padding: 14,
-    width: '100%',
-    border: '1px solid white',
-    backgroundColor: 'transparent',
-    color: 'white',
-    '&::placeholder': {
-        color: 'white',
-        fontFamily: 'Maven Pro',
-    },
-};
-
-export const TextField = styled.input(InputStyle);
-
-export const StyledTextArea = styled.textarea(InputStyle);
-
-export const StyledButton = styled.button`
+export const StyledInput = styled.div`
+    display: block;
+    margin-bottom: 10px;
     padding: 14px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.2);
-    color: white;
-    transition: all ${hoverSpeed}ms ease-in-out;
-    cursor: pointer;
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    border: 1px solid ${(props) => props.colors.borders};
+    background-color: transparent;
+    color: ${(props) => props.colors.fonts.text};
+    &::placeholder {
+        color: ${(props) => props.colors.fonts.text};
+        fontFamily: 'Maven Pro;
     }
 `;

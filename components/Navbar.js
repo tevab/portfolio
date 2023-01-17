@@ -6,6 +6,7 @@ import {
     insidePadding,
     outsidePadding,
     footerHeight,
+    Colors,
 } from '@/styles/GlobalVariables';
 import CloseIcon from '../public/svg/CloseIcon';
 import Link from 'next/link';
@@ -46,7 +47,7 @@ const NavLink = styled(Link)`
     font-family: 'Maven Pro';
     text-decoration: none;
     font-size: 8vw;
-    color: #255f85;
+    color: ${(props) => props.colors.fonts.nav};
     display: block;
     margin: 20px 0;
 `;
@@ -54,6 +55,8 @@ const NavLink = styled(Link)`
 const Navbar = () => {
     const { openMenu, setOpenMenu } = useContext(AppContext);
     const [hideNav, setHideNav] = useState(true);
+
+    const colors = useContext(Colors);
 
     useEffect(() => {
         if (!openMenu) {
@@ -71,20 +74,33 @@ const Navbar = () => {
                 onClick={() => setOpenMenu(false)}
                 hideNav={hideNav}
                 openMenu={openMenu}
+                colors={colors}
             />
             <StyledNavbar hideNav={hideNav} openMenu={openMenu}>
                 <li>
-                    <NavLink href='/work' onClick={() => setOpenMenu(false)}>
+                    <NavLink
+                        href='/work'
+                        onClick={() => setOpenMenu(false)}
+                        colors={colors}
+                    >
                         Work
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink href='/about' onClick={() => setOpenMenu(false)}>
+                    <NavLink
+                        href='/about'
+                        onClick={() => setOpenMenu(false)}
+                        colors={colors}
+                    >
                         About
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink href='/resume' onClick={() => setOpenMenu(false)}>
+                    <NavLink
+                        href='/resume'
+                        onClick={() => setOpenMenu(false)}
+                        colors={colors}
+                    >
                         Resume
                     </NavLink>
                 </li>
