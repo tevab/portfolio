@@ -48,6 +48,9 @@ const GlobalStyle = createGlobalStyle`
     p {
         margin: 0 0 40px 0
     }
+    a {
+        color: inherit;
+    }
 `;
 
 const PageWrapper = styled.div`
@@ -146,8 +149,8 @@ const Layout = ({ children }) => {
                         <StyledHeader />
                         <StyledMainContainer>{children}</StyledMainContainer>
                         <StyledFooter colors={colors} />
-                        <Background />
                     </PageBorder>
+                    <Background />
                 </PageWrapper>
             </AppContext.Provider>
         </>
