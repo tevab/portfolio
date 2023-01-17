@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 18px;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
+        overflow: hidden;
     }
     * {
         box-sizing: border-box;
