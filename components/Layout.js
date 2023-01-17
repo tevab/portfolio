@@ -13,6 +13,7 @@ import {
 import Footer from './Footer';
 import Header from './Header';
 import MainContainer from './MainContainer';
+import Background from './Background';
 import { useRouter } from 'next/router';
 
 export const AppContext = createContext(null);
@@ -90,7 +91,7 @@ const StyledMainContainer = styled(MainContainer)`
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 0;
+    z-index: 1;
 `;
 
 const StyledFooter = styled(Footer)`
@@ -145,6 +146,7 @@ const Layout = ({ children }) => {
                         <StyledHeader />
                         <StyledMainContainer>{children}</StyledMainContainer>
                         <StyledFooter colors={colors} />
+                        <Background />
                     </PageBorder>
                 </PageWrapper>
             </AppContext.Provider>
