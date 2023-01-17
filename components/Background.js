@@ -27,7 +27,7 @@ const Circle = styled.div`
     position: absolute;
     border-radius: 50%;
     transform-origin: 20vh 20vw;
-    animation: ${rotate} infinite 30s ease-in-out;
+    animation: ${rotate} infinite ${(props) => props.speed}s ease-in-out;
     animation-direction: ${(props) => props.newDirection};
 `;
 
@@ -43,13 +43,14 @@ const Background = () => {
 
     useEffect(() => {
         const minElements = 6;
-        const maxElements = 8;
+        const maxElements = 10;
         const randomAmount = randomize(minElements, maxElements);
         const elements = [];
         for (let i = 0; i < randomAmount; i++) {
-            const randomSize = randomize(20, 52);
+            const randomSize = randomize(14, 50);
+            const randomSpeed = randomize(20, 40);
             const randomPositionY = randomize(0, 20);
-            const randomPositionX = randomize(0, 60);
+            const randomPositionX = randomize(0, 100);
             const newDirection = Math.random() > 0.5 ? 'forward' : 'reverse';
             elements.push(
                 <Circle
@@ -64,6 +65,7 @@ const Background = () => {
                     }}
                     page={page}
                     direction={newDirection}
+                    speed={randomSpeed}
                 />
             );
         }
@@ -87,7 +89,7 @@ const Background = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                transform: 'translateY(-25vh) translateX(-25vw)',
+                transform: 'translateY(-50vh) translateX(-50vw)',
             }}
         >
             {circles.map((el, i) => {
