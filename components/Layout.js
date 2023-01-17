@@ -4,6 +4,7 @@ import { createContext, useLayoutEffect, useState, useContext } from 'react';
 import {
     outsidePadding,
     insidePadding,
+    borderWidth,
     headerHeight,
     footerHeight,
     menuSpeed,
@@ -33,9 +34,18 @@ const GlobalStyle = createGlobalStyle`
         color: ${(props) => props.colors.fonts.text};
         font-family: 'Maven Pro';
         transition: background-color ${menuSpeed}ms ease-in-out;
+        font-size: 18px;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
     * {
         box-sizing: border-box;
+    }
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    p {
+        margin: 0 0 40px 0
     }
 `;
 
@@ -49,7 +59,7 @@ const PageWrapper = styled.div`
 `;
 
 const PageBorder = styled.div`
-    border: 6px solid ${(props) => props.colors.borders};
+    border: ${borderWidth}px solid ${(props) => props.colors.borders};
     height: 100vh;
     position: relative;
     overflow: hidden;

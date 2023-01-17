@@ -1,21 +1,37 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import clientPromise from '../lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Wrapper, Column } from '../styles/Theme';
 import styled from 'styled-components';
 import { InView } from 'react-intersection-observer';
-import { hoverSpeed, Colors } from '../styles/GlobalVariables';
+import { hoverSpeed, Colors, borderWidth } from '../styles/GlobalVariables';
 import usePrevious from '../hooks/usePrevious';
 
 const Section = styled(Link)`
     color: ${(props) => props.colors.fonts.text};
+    text-decoration: none;
 `;
 
 const StyledImage = styled(Image)`
     opacity: ${(props) => (props.prevWork === props.alt ? 1 : 0)};
     transition: all ${hoverSpeed}ms ease-in-out;
     transition-delay: ${hoverSpeed}ms;
+`;
+
+const Title = styled.h2`
+    font-size: 32px;
+    margin: 0 0 20px 0;
+`;
+
+const SubTitle = styled.h3`
+    font-size: 20px;
+    margin: 0 0 10px 0;
+`;
+
+const StyledStack = styled.li`
+    padding: 10px;
+    border: ${borderWidth / 3}px solid ${(props) => props.colors.borders};
 `;
 
 const Work = ({ users }) => {
@@ -26,6 +42,11 @@ const Work = ({ users }) => {
 
     const images = users.map((el) => {
         return { title: el.title, image: el.image };
+    });
+
+    const stacksList = users.map((el) => {
+        let stacks = el.stack.split(',');
+        return stacks;
     });
 
     return (
@@ -68,15 +89,40 @@ const Work = ({ users }) => {
                                     <Column variant='wideWork'></Column>
                                     <Column variant='narrowWork'>
                                         <div ref={ref}>
-                                            <h2>{user.title}</h2>
+                                            <Title>{user.title}</Title>
                                             <p>{user.content}</p>
                                             <p></p>
-                                            <p>{user.stack}</p>
-                                            <p>{user.date}</p>
                                             <p>
-                                                {user.title} is{' '}
-                                                {inView.toString()}
+                                                <SubTitle>Stack used:</SubTitle>
+                                                <ul
+                                                    style={{
+                                                        listStyle: 'none',
+                                                        padding: 0,
+                                                        display: 'flex',
+                                                        justifyContent:
+                                                            'flex-start',
+                                                        flexWrap: 'wrap',
+                                                        gap: 10,
+                                                        margin: 0,
+                                                    }}
+                                                >
+                                                    {stacksList[index].map(
+                                                        (s, i) => {
+                                                            return (
+                                                                <StyledStack
+                                                                    key={i}
+                                                                    colors={
+                                                                        colors
+                                                                    }
+                                                                >
+                                                                    {s}
+                                                                </StyledStack>
+                                                            );
+                                                        }
+                                                    )}
+                                                </ul>
                                             </p>
+                                            <p>{user.date}</p>
                                         </div>
                                     </Column>
                                 </Wrapper>
