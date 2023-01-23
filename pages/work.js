@@ -1,11 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import clientPromise from '../lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Wrapper, Column } from '../styles/Theme';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { InView } from 'react-intersection-observer';
-import { hoverSpeed, Colors, borderWidth } from '../styles/GlobalVariables';
+import {
+    hoverSpeed,
+    Colors,
+    borderWidth,
+    headerHeight,
+    insidePadding,
+} from '../styles/GlobalVariables';
 import usePrevious from '../hooks/usePrevious';
 
 const Section = styled(Link)`
@@ -20,7 +26,7 @@ const StyledImage = styled(Image)`
 `;
 
 const Title = styled.h2`
-    font-size: 32px;
+    font-size: ${(props) => (props.theme.isTablet.matches ? 20 : 32)}px;
     margin: 0 0 20px 0;
 `;
 
@@ -39,6 +45,7 @@ const Work = ({ users }) => {
     const prevWork = usePrevious(currentWork);
 
     const colors = useContext(Colors);
+    const theme = useContext(ThemeContext);
 
     const images = users.map((el) => {
         return { title: el.title, image: el.image };
@@ -50,27 +57,39 @@ const Work = ({ users }) => {
     });
 
     return (
-        <Wrapper variant='full' id='work-wrapper' currentWork={currentWork}>
+        <Wrapper variant='full' currentWork={currentWork} theme={theme}>
             <Column
                 variant='wideWork'
-                style={{ position: 'fixed', width: '62%' }}
+                style={{
+                    position: 'fixed',
+                    width: '62%',
+                    padding: `${headerHeight + insidePadding}px`,
+                }}
             >
-                {images.map((el, index) => {
-                    return (
-                        <StyledImage
-                            key={index}
-                            src={el.image}
-                            alt={el.title}
-                            style={{
-                                zIndex: images.length - index,
-                            }}
-                            layout='fill'
-                            objectFit='cover'
-                            prevWork={prevWork}
-                            currentWork={currentWork}
-                        />
-                    );
-                })}
+                <div
+                    style={{
+                        position: 'relative',
+                        width: '100%',
+                        height: '100%',
+                    }}
+                >
+                    {images.map((el, index) => {
+                        return (
+                            <StyledImage
+                                key={index}
+                                src={el.image}
+                                alt={el.title}
+                                style={{
+                                    zIndex: images.length - index,
+                                }}
+                                layout='fill'
+                                objectFit='cover'
+                                prevWork={prevWork}
+                                currentWork={currentWork}
+                            />
+                        );
+                    })}
+                </div>
             </Column>
             {users.map((user, index) => {
                 return (
@@ -91,7 +110,6 @@ const Work = ({ users }) => {
                                         <div ref={ref}>
                                             <Title>{user.title}</Title>
                                             <p>{user.content}</p>
-                                            <p></p>
                                             <p>
                                                 <SubTitle>Stack used:</SubTitle>
                                                 <ul
