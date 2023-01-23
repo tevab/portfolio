@@ -3,7 +3,7 @@ import clientPromise from '../lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Wrapper, Column } from '../styles/Theme';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import { InView } from 'react-intersection-observer';
 import {
     hoverSpeed,
@@ -26,7 +26,7 @@ const StyledImage = styled(Image)`
 `;
 
 const Title = styled.h2`
-    font-size: ${(props) => (props.theme.isTablet.matches ? 20 : 32)}px;
+    font-size: 32px;
     margin: 0 0 20px 0;
 `;
 
@@ -45,7 +45,6 @@ const Work = ({ users }) => {
     const prevWork = usePrevious(currentWork);
 
     const colors = useContext(Colors);
-    const theme = useContext(ThemeContext);
 
     const images = users.map((el) => {
         return { title: el.title, image: el.image };
@@ -57,7 +56,7 @@ const Work = ({ users }) => {
     });
 
     return (
-        <Wrapper variant='full' currentWork={currentWork} theme={theme}>
+        <Wrapper variant='full' currentWork={currentWork}>
             <Column
                 variant='wideWork'
                 style={{
