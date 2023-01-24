@@ -3,6 +3,7 @@ import clientPromise from '../lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Wrapper, Column } from '../styles/Theme';
+import { AppContext } from '../components/Layout';
 import styled from 'styled-components';
 import { InView } from 'react-intersection-observer';
 import {
@@ -44,6 +45,7 @@ const Work = ({ users }) => {
     const [currentWork, setCurrentWork] = useState('Local News');
     const prevWork = usePrevious(currentWork);
 
+    const { responsive } = useContext(AppContext);
     const colors = useContext(Colors);
 
     const images = users.map((el) => {
@@ -97,13 +99,13 @@ const Work = ({ users }) => {
                         onChange={() => setCurrentWork(user.title)}
                         threshold={0.2}
                     >
-                        {({ inView, ref }) => (
+                        {({ ref }) => (
                             <Section
                                 href={`${user.url}`}
                                 target='_blank'
                                 colors={colors}
                             >
-                                <Wrapper variant='work'>
+                                <Wrapper variant='work' responsive={responsive}>
                                     <Column variant='wideWork'></Column>
                                     <Column variant='narrowWork'>
                                         <div ref={ref}>

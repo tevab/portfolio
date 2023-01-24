@@ -5,8 +5,13 @@ import {
     outsidePadding,
     headerHeight,
     footerHeight,
-    hoverSpeed,
 } from './GlobalVariables';
+
+const breakpoints = ['767px', '991px'];
+
+// aliases
+breakpoints.sm = breakpoints[0];
+breakpoints.md = breakpoints[1];
 
 export const Wrapper = styled('div')(
     {
@@ -25,11 +30,13 @@ export const Wrapper = styled('div')(
                 display: 'flex',
                 overflow: 'hidden',
             },
+
             work: {
                 position: 'relative',
                 display: 'flex',
                 overflow: 'hidden',
                 height: '100%',
+                flexDirection: ['column', 'row'],
             },
         },
     })

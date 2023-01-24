@@ -1,6 +1,12 @@
 import Head from 'next/head';
 import styled, { createGlobalStyle } from 'styled-components';
-import { createContext, useLayoutEffect, useState, useContext } from 'react';
+import {
+    createContext,
+    useLayoutEffect,
+    useState,
+    useContext,
+    useEffect,
+} from 'react';
 import {
     outsidePadding,
     insidePadding,
@@ -114,6 +120,7 @@ const StyledFooter = styled(Footer)`
 const Layout = ({ children }) => {
     const [openMenu, setOpenMenu] = useState(false);
     const [page, setPage] = useState('home');
+    const [responsive, setResponsive] = useState(null);
 
     const colors = useContext(Colors);
     const router = useRouter();
@@ -130,9 +137,26 @@ const Layout = ({ children }) => {
         }
     }, [router.asPath]);
 
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth < 767) {
+                setResponsive('isMobile');
+            } else if (window.innerWidth > 768 && window.innerWidth < 991) {
+                setResponsive('isTablet');
+            } else if (window.innerWidth > 992) {
+                setResponsive('isDesktop');
+            }
+        }
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <>
-            <AppContext.Provider value={{ openMenu, setOpenMenu, page }}>
+            <AppContext.Provider
+                value={{ openMenu, setOpenMenu, page, responsive }}
+            >
                 <GlobalStyle page={page} colors={colors} />
                 <PageWrapper>
                     <PageBorder colors={colors}>
