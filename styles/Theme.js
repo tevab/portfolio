@@ -31,13 +31,15 @@ export const Wrapper = styled.div`
             display: flex;
             overflow: hidden;
             height: 100%;
-            // flexDirection: ['column', 'row']
+            flex-direction: ${props.responsive === 'isMobile'
+                ? 'column'
+                : 'row'};
         `}
 `;
 
 export const Column = styled.div`
-    padding: ${insidePadding};
-    padding-top: ${headerHeight + insidePadding};
+    padding: ${insidePadding}px;
+    padding-top: ${headerHeight + insidePadding}px;
     overflow: auto;
     ${(props) =>
         props.variant === 'wide' &&
@@ -63,7 +65,7 @@ export const Column = styled.div`
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: ${insidePadding};
+            padding: ${insidePadding}px;
         `}
 `;
 

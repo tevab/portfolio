@@ -67,6 +67,7 @@ const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
 `;
 
 const PageBorder = styled.div`
@@ -139,10 +140,8 @@ const Layout = ({ children }) => {
 
     useEffect(() => {
         function handleResize() {
-            if (window.innerWidth < 767) {
+            if (window.innerWidth < 991) {
                 setResponsive('isMobile');
-            } else if (window.innerWidth > 768 && window.innerWidth < 991) {
-                setResponsive('isTablet');
             } else if (window.innerWidth > 992) {
                 setResponsive('isDesktop');
             }
