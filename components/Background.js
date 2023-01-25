@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 import { Colors } from '@/styles/GlobalVariables';
 import { AppContext } from './Layout';
 

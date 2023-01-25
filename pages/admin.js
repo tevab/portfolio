@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Wrapper, Column, StyledInput } from '../styles/Theme';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { insidePadding, hoverSpeed, Colors } from '../styles/GlobalVariables';
 
 const Card = styled(Link)`

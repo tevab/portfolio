@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import styled, { createGlobalStyle } from 'styled-components';
+import { Global, css } from '@emotion/react';
+import styled from '@emotion/styled';
 import {
     createContext,
     useLayoutEffect,
@@ -24,26 +25,25 @@ import { useRouter } from 'next/router';
 
 export const AppContext = createContext(null);
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = (props) => css`
     body {
-        background-color: ${(props) =>
-            props.page === 'home'
-                ? props.colors.backgrounds.home
-                : props.page === 'work'
-                ? props.colors.backgrounds.work
-                : props.page === 'about'
-                ? props.colors.backgrounds.about
-                : props.page === 'resume'
-                ? props.colors.backgrounds.resume
-                : null};
+        background-color: ${props.page === 'home'
+            ? props.colors.backgrounds.home
+            : props.page === 'work'
+            ? props.colors.backgrounds.work
+            : props.page === 'about'
+            ? props.colors.backgrounds.about
+            : props.page === 'resume'
+            ? props.colors.backgrounds.resume
+            : null};
         padding: 0;
         margin: 0;
-        color: ${(props) => props.colors.fonts.text};
+        color: ${props.colors.fonts.text};
         font-family: 'Maven Pro';
         transition: background-color ${menuSpeed}ms ease-in-out;
         font-size: 18px;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
         overflow: hidden;
     }
     * {
@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
         display: none;
     }
     p {
-        margin: 0 0 40px 0
+        margin: 0 0 40px 0;
     }
     a {
         color: inherit;
@@ -155,9 +155,10 @@ const Layout = ({ children }) => {
     return (
         <>
             <AppContext.Provider
-                value={{ openMenu, setOpenMenu, page, responsive }}
+                value={{ openMenu, setOpenMenu, page, responsive, colors }}
             >
-                <GlobalStyle page={page} colors={colors} />
+                <Global styles={() => GlobalStyle({ page, colors })} />
+
                 <PageWrapper>
                     <PageBorder colors={colors}>
                         <Head>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './Layout';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import {
     menuSpeed,
     insidePadding,

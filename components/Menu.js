@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './Layout';
-import styled, { keyframes, css } from 'styled-components';
+import { keyframes, css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { menuSpeed, Colors } from '@/styles/GlobalVariables';
 import Navbar from './Navbar';
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Menu from './Menu';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Link from 'next/link';
 import { AppContext } from './Layout';
 import { menuSpeed, Colors } from '@/styles/GlobalVariables';

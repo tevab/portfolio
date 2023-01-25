@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { variant } from 'styled-system';
 import {
     insidePadding,
@@ -12,6 +12,10 @@ const breakpoints = ['767px', '991px'];
 // aliases
 breakpoints.sm = breakpoints[0];
 breakpoints.md = breakpoints[1];
+
+export default {
+    breakpoints,
+};
 
 export const Wrapper = styled('div')(
     {

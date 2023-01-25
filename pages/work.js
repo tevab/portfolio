@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Wrapper, Column } from '../styles/Theme';
 import { AppContext } from '../components/Layout';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { InView } from 'react-intersection-observer';
 import {
     hoverSpeed,
