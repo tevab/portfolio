@@ -63,15 +63,16 @@ const Work = ({ users }) => {
                 variant='wideWork'
                 style={{
                     position: 'fixed',
-                    width: '62%',
+                    width: responsive === 'isMobile' ? '100%' : '62%',
                     padding: `${headerHeight + insidePadding}px`,
+                    right: responsive === 'isMobile' ? 0 : null,
                 }}
             >
                 <div
                     style={{
                         position: 'relative',
                         width: '100%',
-                        height: '100%',
+                        height: responsive === 'isMobile' ? '288px' : '100%',
                     }}
                 >
                     {images.map((el, index) => {
@@ -106,8 +107,14 @@ const Work = ({ users }) => {
                                 colors={colors}
                             >
                                 <Wrapper variant='work' responsive={responsive}>
-                                    <Column variant='wideWork'></Column>
-                                    <Column variant='narrowWork'>
+                                    <Column
+                                        variant='wideWork'
+                                        responsive={responsive}
+                                    ></Column>
+                                    <Column
+                                        variant='narrowWork'
+                                        responsive={responsive}
+                                    >
                                         <div ref={ref}>
                                             <Title>{user.title}</Title>
                                             <p>{user.content}</p>

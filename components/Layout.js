@@ -62,8 +62,14 @@ const GlobalStyle = (props) => css`
 
 const PageWrapper = styled.div`
     width: 100%;
-    height: 100vh;
-    padding: ${outsidePadding}px;
+    height: ${(props) =>
+        props.responsive === 'isMobile'
+            ? 'calc(var(--vh, 1vh) * 100)'
+            : '100vh'};
+    padding: ${(props) =>
+        props.responsive === 'isMobile'
+            ? outsidePadding / 2
+            : outsidePadding}px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -71,7 +77,9 @@ const PageWrapper = styled.div`
 `;
 
 const PageBorder = styled.div`
-    border: ${borderWidth}px solid ${(props) => props.colors.borders};
+    border: ${(props) =>
+            props.responsive === 'isMobile' ? borderWidth / 2 : borderWidth}px
+        solid ${(props) => props.colors.borders};
     height: 100vh;
     position: relative;
     overflow: hidden;
@@ -145,6 +153,10 @@ const Layout = ({ children }) => {
             } else if (window.innerWidth > 992) {
                 setResponsive('isDesktop');
             }
+            let vh = window.innerHeight * 0.01;
+            document
+                .getElementById('page-wrapper')
+                .style.setProperty('--vh', `${vh}px`);
         }
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -158,8 +170,8 @@ const Layout = ({ children }) => {
             >
                 <Global styles={() => GlobalStyle({ page, colors })} />
 
-                <PageWrapper>
-                    <PageBorder colors={colors}>
+                <PageWrapper id='page-wrapper' responsive={responsive}>
+                    <PageBorder colors={colors} responsive={responsive}>
                         <Head>
                             <title>Teva Barzilay</title>
                             <meta

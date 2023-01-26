@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
             position: relative;
             display: flex;
             overflow: hidden;
-            height: 100%;
+            height: ${props.responsive === 'isMobile' ? 'auto' : '100%'};
             flex-direction: ${props.responsive === 'isMobile'
                 ? 'column'
                 : 'row'};
@@ -54,18 +54,21 @@ export const Column = styled.div`
     ${(props) =>
         props.variant === 'wideWork' &&
         css`
-            width: 66%;
+            width: ${props.responsive === 'isMobile' ? '100%' : '66%'};
             padding: 0;
-            height: calc(100vh - ${outsidePadding}px - ${footerHeight}px - 2px);
+            height: ${props.responsive === 'isMobile'
+                ? '380px'
+                : `calc(100vh - ${outsidePadding}px - ${footerHeight}px - 2px)`};
         `}
     ${(props) =>
         props.variant === 'narrowWork' &&
         css`
-            width: 30%;
+            width: ${props.responsive === 'isMobile' ? '100%' : '30%'};
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: ${insidePadding}px;
+            height: 100%;
         `}
 `;
 
