@@ -108,8 +108,8 @@ const Work = ({ users }) => {
                                                         'isMobile'
                                                             ? `${insidePadding}px ${
                                                                   insidePadding /
-                                                                  2
-                                                              }px 0 `
+                                                                  4
+                                                              }px 0`
                                                             : insidePadding,
                                                 }}
                                             >
@@ -121,7 +121,12 @@ const Work = ({ users }) => {
                                                         padding: 'inherit',
                                                     }}
                                                     layout='fill'
-                                                    objectFit='cover'
+                                                    objectFit={
+                                                        responsive ===
+                                                        'isMobile'
+                                                            ? 'cover'
+                                                            : 'contain'
+                                                    }
                                                     prevWork={prevWork}
                                                     currentWork={currentWork}
                                                     responsive={responsive}

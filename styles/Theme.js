@@ -70,7 +70,7 @@ export const Column = styled.div`
             flex-direction: column;
             justify-content: center;
             padding: ${props.responsive === 'isMobile'
-                ? `40px ${insidePadding / 2}px 0`
+                ? `40px ${insidePadding / 4}px 0`
                 : `0
                 ${insidePadding}px 0 0;`};
             height: 100%;

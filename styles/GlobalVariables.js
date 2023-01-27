@@ -12,7 +12,7 @@ export const Colors = createContext({
     fonts: { text: '#ffffff', nav: '#255f85' },
     backgrounds: {
         home: '#C5283D',
-        work: '#28c5b0',
+        work: '#29B2BA',
         about: '#8BC528',
         resume: '#6228C5',
     },
