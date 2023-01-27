@@ -39,7 +39,7 @@ export const Wrapper = styled.div`
 
 export const Column = styled.div`
     padding: ${insidePadding}px;
-    padding-top: ${headerHeight + insidePadding}px;
+    padding-top: ${insidePadding}px;
     overflow: auto;
     ${(props) =>
         props.variant === 'wide' &&
@@ -54,20 +54,25 @@ export const Column = styled.div`
     ${(props) =>
         props.variant === 'wideWork' &&
         css`
-            width: ${props.responsive === 'isMobile' ? '100%' : '66%'};
+            position: relative;
+            width: ${props.responsive === 'isMobile' ? '100%' : '60vw'};
             padding: 0;
             height: ${props.responsive === 'isMobile'
                 ? '380px'
                 : `calc(100vh - ${outsidePadding}px - ${footerHeight}px - 2px)`};
+            z-index: -1;
         `}
     ${(props) =>
         props.variant === 'narrowWork' &&
         css`
-            width: ${props.responsive === 'isMobile' ? '100%' : '30%'};
+            width: ${props.responsive === 'isMobile' ? '100%' : '34vw'};
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: ${insidePadding}px;
+            padding: ${props.responsive === 'isMobile'
+                ? `40px ${insidePadding / 2}px 0`
+                : `0
+                ${insidePadding}px 0 0;`};
             height: 100%;
         `}
 `;

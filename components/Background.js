@@ -34,7 +34,7 @@ const Circle = styled.div`
 
 const Background = () => {
     const colors = useContext(Colors);
-    const { page } = useContext(AppContext);
+    const { page, responsive } = useContext(AppContext);
     const [circles, setCircles] = useState([]);
 
     const randomize = (min, max) => {
@@ -71,7 +71,7 @@ const Background = () => {
             );
         }
         setCircles(elements);
-    }, []);
+    }, [responsive]);
 
     return (
         <ul
@@ -90,7 +90,10 @@ const Background = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                transform: 'translateY(-50vh) translateX(-50vw)',
+                transform:
+                    responsive === 'isMobile'
+                        ? 'none'
+                        : 'translateY(-50vh) translateX(-50vw)',
             }}
         >
             {circles.map((el, i) => {

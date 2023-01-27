@@ -12,6 +12,8 @@ import {
     borderWidth,
     headerHeight,
     insidePadding,
+    outsidePadding,
+    footerHeight,
 } from '../styles/GlobalVariables';
 import usePrevious from '../hooks/usePrevious';
 
@@ -21,7 +23,12 @@ const Section = styled(Link)`
 `;
 
 const StyledImage = styled(Image)`
-    opacity: ${(props) => (props.prevWork === props.alt ? 1 : 0)};
+    opacity: ${(props) =>
+        props.responsive === 'isMobile'
+            ? 1
+            : props.prevWork === props.alt
+            ? 1
+            : 0};
     transition: all ${hoverSpeed}ms ease-in-out;
     transition-delay: ${hoverSpeed}ms;
 `;
@@ -48,10 +55,6 @@ const Work = ({ users }) => {
     const { responsive } = useContext(AppContext);
     const colors = useContext(Colors);
 
-    const images = users.map((el) => {
-        return { title: el.title, image: el.image };
-    });
-
     const stacksList = users.map((el) => {
         let stacks = el.stack.split(',');
         return stacks;
@@ -59,40 +62,6 @@ const Work = ({ users }) => {
 
     return (
         <Wrapper variant='full' currentWork={currentWork}>
-            <Column
-                variant='wideWork'
-                style={{
-                    position: 'fixed',
-                    width: responsive === 'isMobile' ? '100%' : '62%',
-                    padding: `${headerHeight + insidePadding}px`,
-                    right: responsive === 'isMobile' ? 0 : null,
-                }}
-            >
-                <div
-                    style={{
-                        position: 'relative',
-                        width: '100%',
-                        height: responsive === 'isMobile' ? '288px' : '100%',
-                    }}
-                >
-                    {images.map((el, index) => {
-                        return (
-                            <StyledImage
-                                key={index}
-                                src={el.image}
-                                alt={el.title}
-                                style={{
-                                    zIndex: images.length - index,
-                                }}
-                                layout='fill'
-                                objectFit='cover'
-                                prevWork={prevWork}
-                                currentWork={currentWork}
-                            />
-                        );
-                    })}
-                </div>
-            </Column>
             {users.map((user, index) => {
                 return (
                     <InView
@@ -110,7 +79,56 @@ const Work = ({ users }) => {
                                     <Column
                                         variant='wideWork'
                                         responsive={responsive}
-                                    ></Column>
+                                    >
+                                        <div
+                                            style={{
+                                                position:
+                                                    responsive === 'isMobile'
+                                                        ? 'static'
+                                                        : 'fixed',
+                                                height:
+                                                    responsive === 'isMobile'
+                                                        ? 'inherit'
+                                                        : `calc(100vh - ${outsidePadding}px - ${footerHeight}px - 2px)`,
+                                                width: 'inherit',
+                                                top: outsidePadding,
+                                            }}
+                                        >
+                                            <div
+                                                style={{
+                                                    position: 'relative',
+                                                    height:
+                                                        responsive ===
+                                                        'isMobile'
+                                                            ? 'inherit'
+                                                            : `calc(100vh - ${outsidePadding}px - ${footerHeight}px - 2px)`,
+                                                    width: 'inherit',
+                                                    padding:
+                                                        responsive ===
+                                                        'isMobile'
+                                                            ? `${insidePadding}px ${
+                                                                  insidePadding /
+                                                                  2
+                                                              }px 0 `
+                                                            : insidePadding,
+                                                }}
+                                            >
+                                                <StyledImage
+                                                    key={index}
+                                                    src={user.image}
+                                                    alt={user.title}
+                                                    style={{
+                                                        padding: 'inherit',
+                                                    }}
+                                                    layout='fill'
+                                                    objectFit='cover'
+                                                    prevWork={prevWork}
+                                                    currentWork={currentWork}
+                                                    responsive={responsive}
+                                                />
+                                            </div>
+                                        </div>
+                                    </Column>
                                     <Column
                                         variant='narrowWork'
                                         responsive={responsive}

@@ -92,7 +92,7 @@ const StyledHeader = styled(Header)`
     left: 0;
     right: 0;
     z-index: 2;
-    padding: ${insidePadding}px;
+    padding: ${insidePadding / 5}px;
     height: ${headerHeight}px;
     font-family: 'Slabo 27px';
     font-size: 32px;
@@ -120,7 +120,7 @@ const StyledFooter = styled(Footer)`
     left: 0;
     right: 0;
     z-index: 1;
-    padding: ${insidePadding}px;
+    padding: ${insidePadding / 3}px;
     height: ${footerHeight}px;
     font-size: 12px;
     color: ${(props) => props.colors.text};
@@ -148,9 +148,9 @@ const Layout = ({ children }) => {
 
     useEffect(() => {
         function handleResize() {
-            if (window.innerWidth < 991) {
+            if (window.innerWidth < 990) {
                 setResponsive('isMobile');
-            } else if (window.innerWidth > 992) {
+            } else if (window.innerWidth > 991) {
                 setResponsive('isDesktop');
             }
             let vh = window.innerHeight * 0.01;
@@ -187,7 +187,7 @@ const Layout = ({ children }) => {
                         <StyledMainContainer>{children}</StyledMainContainer>
                         <StyledFooter colors={colors} />
                     </PageBorder>
-                    <Background />
+                    <Background responsive={responsive} />
                 </PageWrapper>
             </AppContext.Provider>
         </>
