@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const MainContainer = (props) => {
     return (
@@ -6,6 +7,11 @@ const MainContainer = (props) => {
             {props.children}
         </div>
     );
+};
+
+MainContainer.propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.any,
 };
 
 export default MainContainer;

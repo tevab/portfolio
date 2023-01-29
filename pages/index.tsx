@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import React from 'next/head';
 
 export default function Home() {
     return (

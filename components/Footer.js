@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AppContext } from './Layout';
+import PropTypes from 'prop-types';
 
 const Footer = (props) => {
     const { handleHover, handleHoverOut } = useContext(AppContext);
@@ -18,6 +19,10 @@ const Footer = (props) => {
             !
         </div>
     );
+};
+
+Footer.propTypes = {
+    className: PropTypes.string,
 };
 
 export default Footer;

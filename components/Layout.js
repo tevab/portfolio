@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Global, css } from '@emotion/react';
 import styled from '@emotion/styled';
-import {
+import React, {
     createContext,
     useLayoutEffect,
     useState,
@@ -23,6 +23,7 @@ import MainContainer from './MainContainer';
 import Background from './Background';
 import Cursor from './Cursor';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 
 export const AppContext = createContext(null);
 
@@ -224,6 +225,10 @@ const Layout = ({ children }) => {
             </AppContext.Provider>
         </>
     );
+};
+
+Layout.propTypes = {
+    children: PropTypes.any,
 };
 
 export default Layout;

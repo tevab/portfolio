@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 
 const CursorImage = (props) => (
     <svg
@@ -11,5 +12,9 @@ const CursorImage = (props) => (
         <circle cx={10} cy={10} r={10} fill={props.colors.black} />
     </svg>
 );
+
+CursorImage.propTypes = {
+    colors: PropTypes.object,
+};
 
 export default CursorImage;

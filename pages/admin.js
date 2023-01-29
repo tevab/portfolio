@@ -1,9 +1,11 @@
+import React from 'react';
 import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Wrapper, Column, StyledInput } from '../styles/Theme';
 import styled from '@emotion/styled';
 import { insidePadding, hoverSpeed, Colors } from '../styles/GlobalVariables';
+import PropTypes from 'prop-types';
 
 const Card = styled(Link)`
     background-color: ${(props) => props.colors.fonts.text}1a;
@@ -167,7 +169,7 @@ export default function Admin({ posts }) {
     );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
     let res = await fetch('http://localhost:3000/api/posts', {
         method: 'GET',
         headers: {
@@ -180,3 +182,7 @@ export async function getServerSideProps(context) {
         props: { posts },
     };
 }
+
+Admin.propTypes = {
+    posts: PropTypes.object,
+};

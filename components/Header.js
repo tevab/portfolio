@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { AppContext } from './Layout';
 import { menuSpeed, Colors } from '@/styles/GlobalVariables';
+import PropTypes from 'prop-types';
 
 const Logo = styled(Link)`
     mix-blend-mode: difference;
@@ -121,6 +122,10 @@ const Header = (props) => {
             </Logo>
         </div>
     );
+};
+
+Header.propTypes = {
+    className: PropTypes.string,
 };
 
 export default Header;

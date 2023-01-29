@@ -10,12 +10,12 @@ import {
     hoverSpeed,
     Colors,
     borderWidth,
-    headerHeight,
     insidePadding,
     outsidePadding,
     footerHeight,
 } from '../styles/GlobalVariables';
 import usePrevious from '../hooks/usePrevious';
+import PropTypes from 'prop-types';
 
 const Section = styled(Link)`
     color: ${(props) => props.colors.fonts.text};
@@ -189,7 +189,7 @@ const Work = ({ users }) => {
     );
 };
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
     const client = await clientPromise;
 
     const db = client.db('my-work');
@@ -201,5 +201,9 @@ export async function getServerSideProps(context) {
         props: { users },
     };
 }
+
+Work.propTypes = {
+    users: PropTypes.object,
+};
 
 export default Work;

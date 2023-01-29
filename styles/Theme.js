@@ -1,11 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import {
-    insidePadding,
-    outsidePadding,
-    headerHeight,
-    footerHeight,
-} from './GlobalVariables';
+import { insidePadding, outsidePadding, footerHeight } from './GlobalVariables';
 
 export const Wrapper = styled.div`
     position: absolute;
