@@ -35,6 +35,7 @@ const StyledImage = styled(Image)`
 
 const Title = styled.h2`
     font-size: 32px;
+    font-weight: 400;
     margin: 0 0 20px 0;
 `;
 
@@ -52,7 +53,7 @@ const Work = ({ users }) => {
     const [currentWork, setCurrentWork] = useState('Local News');
     const prevWork = usePrevious(currentWork);
 
-    const { responsive } = useContext(AppContext);
+    const { responsive, handleHover, handleHoverOut } = useContext(AppContext);
     const colors = useContext(Colors);
 
     const stacksList = users.map((el) => {
@@ -74,6 +75,8 @@ const Work = ({ users }) => {
                                 href={`${user.url}`}
                                 target='_blank'
                                 colors={colors}
+                                onMouseOver={handleHover}
+                                onMouseOut={handleHoverOut}
                             >
                                 <Wrapper variant='work' responsive={responsive}>
                                     <Column
@@ -171,7 +174,9 @@ const Work = ({ users }) => {
                                                     )}
                                                 </ul>
                                             </p>
-                                            <p>{user.date}</p>
+                                            <p style={{ fontSize: 14 }}>
+                                                {user.date}
+                                            </p>
                                         </div>
                                     </Column>
                                 </Wrapper>

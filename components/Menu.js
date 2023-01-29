@@ -7,33 +7,34 @@ import Navbar from './Navbar';
 
 const bounce = keyframes`
   0% {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
   }
   10% {
-    width: 120px;
+    width: 220px;
   }
   20% {
-    width: 100px;
+    width: 200px;
   }
   40% {
-    width: 120px;
+    width: 220px;
   }
   50% {
-    width: 100px;
+    width: 200px;
   }
   100% {
-    width: 100px;
+    width: 200px;
   }
 `;
 
 const StyledMenu = styled.div`
     background: ${(props) => props.colors.borders};
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
     transform: scale(${(props) => (props.openMenu ? 100 : 1)});
     cursor: pointer;
     transition: all ${menuSpeed}ms ease-in-out;
+    cursor: none;
     ${(props) =>
         !props.menuOpened &&
         css`
@@ -42,7 +43,8 @@ const StyledMenu = styled.div`
 `;
 
 const Menu = () => {
-    const { openMenu, setOpenMenu } = useContext(AppContext);
+    const { openMenu, setOpenMenu, handleHover, handleHoverOut } =
+        useContext(AppContext);
     const [menuOpened, setMenuOpened] = useState(false);
 
     const colors = useContext(Colors);
@@ -59,9 +61,11 @@ const Menu = () => {
                 style={{
                     transform: 'rotate(45deg)',
                     position: 'absolute',
-                    top: '-52px',
-                    right: '-52px',
+                    top: '-140px',
+                    left: '-140px',
                 }}
+                onMouseOver={handleHover}
+                onMouseOut={handleHoverOut}
             >
                 <StyledMenu
                     onClick={() => setOpenMenu(!openMenu)}

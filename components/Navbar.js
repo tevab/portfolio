@@ -21,12 +21,20 @@ const StyledNavbar = styled.ul`
     width: 100%;
     height: calc(100vh - ${outsidePadding}px - ${footerHeight}px);
     display: flex;
-    flex-direction: column;
+    flex-direction: ${(props) =>
+        props.responsive === 'isMobile' ? 'column' : 'row'};
     align-content: center;
     justify-content: center;
     align-items: center;
     list-style: none;
     padding: 0;
+    font-size: 2vw;
+    top: ${(props) =>
+        props.responsive === 'isMobile'
+            ? `${insidePadding - 40}px`
+            : `${insidePadding}px`};
+    left: ${insidePadding}px;
+    font-family: 'Slabo';
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`
@@ -34,26 +42,65 @@ const StyledCloseIcon = styled(CloseIcon)`
     height: 40px;
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
     cursor: pointer;
     z-index: 1;
     visibility: ${(props) => (props.hideNav ? 'hidden' : 'visible')};
     opacity: ${(props) => (props.openMenu ? 1 : 0)};
     transition: opacity ${menuSpeed / 2}ms ease-in-out, visiblity 0ms linear;
     transition-delay: ${(props) => (props.openMenu ? `${menuSpeed / 2}` : 0)}ms;
+    cursor: none;
 `;
 
 const NavLink = styled(Link)`
-    font-family: 'Maven Pro';
+    font-family: 'Hind';
     text-decoration: none;
-    font-size: 8vw;
     color: ${(props) => props.colors.fonts.nav};
     display: block;
-    margin: 20px 0;
+    margin: 0 20px;
+    font-size: ${(props) => (props.responsive === 'isMobile' ? '16vw' : '4vw')};
+    font-weight: 600;
+    line-height: ${(props) =>
+        props.responsive === 'isMobile' ? '20vw' : 'inherit'};
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        background-color: ${(props) =>
+            props.page === 'home'
+                ? props.colors.backgrounds.home
+                : props.page === 'work'
+                ? props.colors.backgrounds.work
+                : props.page === 'about'
+                ? props.colors.backgrounds.about
+                : props.page === 'resume'
+                ? props.colors.backgrounds.resume
+                : null};
+        left: -5%;
+        top: ${(props) => (props.responsive === 'isMobile' ? '0' : '-2vw')};
+        height: ${(props) =>
+            props.responsive === 'isMobile' ? '20vw' : '5vw'};
+        width: 0%;
+        mix-blend-mode: multiply;
+        opacity: 0.4;
+        transition: all ${menuSpeed / 4}ms ease-in-out;
+    }
+    &:hover {
+        &::before {
+            width: 110%;
+        }
+    }
 `;
 
 const Navbar = () => {
-    const { openMenu, setOpenMenu } = useContext(AppContext);
+    const {
+        openMenu,
+        setOpenMenu,
+        responsive,
+        page,
+        handleHover,
+        handleHoverOut,
+    } = useContext(AppContext);
     const [hideNav, setHideNav] = useState(true);
 
     const colors = useContext(Colors);
@@ -75,31 +122,55 @@ const Navbar = () => {
                 hideNav={hideNav}
                 openMenu={openMenu}
                 colors={colors}
+                onMouseOver={handleHover}
+                onMouseOut={handleHoverOut}
             />
-            <StyledNavbar hideNav={hideNav} openMenu={openMenu}>
+            <StyledNavbar
+                hideNav={hideNav}
+                openMenu={openMenu}
+                responsive={responsive}
+            >
                 <li>
                     <NavLink
                         href='/work'
                         onClick={() => setOpenMenu(false)}
                         colors={colors}
+                        responsive={responsive}
+                        page={page}
+                        onMouseOver={handleHover}
+                        onMouseOut={handleHoverOut}
                     >
                         Work
                     </NavLink>
                 </li>
+                {responsive === 'isDesktop' && (
+                    <li style={{ color: colors.black }}>/</li>
+                )}
                 <li>
                     <NavLink
                         href='/about'
                         onClick={() => setOpenMenu(false)}
                         colors={colors}
+                        responsive={responsive}
+                        page={page}
+                        onMouseOver={handleHover}
+                        onMouseOut={handleHoverOut}
                     >
                         About
                     </NavLink>
                 </li>
+                {responsive === 'isDesktop' && (
+                    <li style={{ color: colors.black }}>/</li>
+                )}
                 <li>
                     <NavLink
                         href='/resume'
                         onClick={() => setOpenMenu(false)}
                         colors={colors}
+                        responsive={responsive}
+                        page={page}
+                        onMouseOver={handleHover}
+                        onMouseOut={handleHoverOut}
                     >
                         Resume
                     </NavLink>

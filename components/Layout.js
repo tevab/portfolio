@@ -21,6 +21,7 @@ import Footer from './Footer';
 import Header from './Header';
 import MainContainer from './MainContainer';
 import Background from './Background';
+import Cursor from './Cursor';
 import { useRouter } from 'next/router';
 
 export const AppContext = createContext(null);
@@ -39,24 +40,23 @@ const GlobalStyle = (props) => css`
         padding: 0;
         margin: 0;
         color: ${props.colors.fonts.text};
-        font-family: 'Maven Pro';
+        font-family: 'Hind';
+        font-weight: 300;
         transition: background-color ${menuSpeed}ms ease-in-out;
         font-size: 18px;
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
         overflow: hidden;
+        line-height: 24px;
+        cursor: none;
     }
     * {
         box-sizing: border-box;
-    }
-    ::-webkit-scrollbar {
-        display: none;
     }
     p {
         margin: 0 0 40px 0;
     }
     a {
         color: inherit;
+        cursor: none;
     }
 `;
 
@@ -130,6 +130,8 @@ const Layout = ({ children }) => {
     const [openMenu, setOpenMenu] = useState(false);
     const [page, setPage] = useState('home');
     const [responsive, setResponsive] = useState(null);
+    const [clicked, setClicked] = useState(false);
+    const [hovered, setHovered] = useState(false);
 
     const colors = useContext(Colors);
     const router = useRouter();
@@ -163,14 +165,44 @@ const Layout = ({ children }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const handleMouseDown = () => {
+        setClicked(true);
+        setTimeout(() => {
+            setClicked(false);
+        }, menuSpeed);
+    };
+
+    const handleHover = () => {
+        setHovered(true);
+    };
+
+    const handleHoverOut = () => {
+        setHovered(false);
+    };
+
     return (
         <>
             <AppContext.Provider
-                value={{ openMenu, setOpenMenu, page, responsive, colors }}
+                value={{
+                    openMenu,
+                    setOpenMenu,
+                    page,
+                    responsive,
+                    colors,
+                    clicked,
+                    setClicked,
+                    handleHover,
+                    handleHoverOut,
+                    hovered,
+                }}
             >
                 <Global styles={() => GlobalStyle({ page, colors })} />
-
-                <PageWrapper id='page-wrapper' responsive={responsive}>
+                <Cursor />
+                <PageWrapper
+                    id='page-wrapper'
+                    responsive={responsive}
+                    onMouseDown={handleMouseDown}
+                >
                     <PageBorder colors={colors} responsive={responsive}>
                         <Head>
                             <title>Teva Barzilay</title>

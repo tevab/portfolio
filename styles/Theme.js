@@ -65,7 +65,7 @@ export const Column = styled.div`
     ${(props) =>
         props.variant === 'narrowWork' &&
         css`
-            width: ${props.responsive === 'isMobile' ? '100%' : '34vw'};
+            width: ${props.responsive === 'isMobile' ? '100%' : '40vw'};
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -87,6 +87,6 @@ export const StyledInput = styled.div`
     color: ${(props) => props.colors.fonts.text};
     &::placeholder {
         color: ${(props) => props.colors.fonts.text};
-        fontFamily: 'Maven Pro;
+        fontfamily: 'Hind';
     }
 `;
