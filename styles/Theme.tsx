@@ -2,7 +2,12 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { insidePadding, outsidePadding, footerHeight } from './GlobalVariables';
 
-export const Wrapper = styled.div`
+interface WrapperProps {
+    variant: string;
+    responsive: string | null;
+}
+
+export const Wrapper = styled.div<WrapperProps>`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -32,7 +37,12 @@ export const Wrapper = styled.div`
         `}
 `;
 
-export const Column = styled.div`
+interface ColumnrProps {
+    variant: string;
+    responsive: string | null;
+}
+
+export const Column = styled.div<ColumnrProps>`
     padding: ${insidePadding}px;
     padding-top: ${insidePadding}px;
     overflow: auto;
@@ -72,7 +82,16 @@ export const Column = styled.div`
         `}
 `;
 
-export const StyledInput = styled.div`
+interface StyledInputProps {
+    colors: {
+        fonts: {
+            text: string;
+        };
+        borders: string;
+    };
+}
+
+export const StyledInput = styled.div<StyledInputProps>`
     display: block;
     margin-bottom: 10px;
     padding: 14px;
