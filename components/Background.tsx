@@ -58,12 +58,16 @@ const Circle = styled.div<CircleProps>`
     animation-direction: ${(props) => props.newDirection};
 `;
 
+interface BackgroundProps {
+    className?: string;
+}
+
 interface AppContextType {
     page: string;
     responsive: string | null;
 }
 
-const Background = () => {
+const Background = ({ className }: BackgroundProps) => {
     const colors = useContext(Colors);
     const context = useContext(AppContext);
     if (context === null) return null;
@@ -107,11 +111,7 @@ const Background = () => {
     }, [responsive]);
 
     return (
-        <ul
-            style={{
-                
-            }}
-        >
+        <ul className={className}>
             {circles.map((el, i) => {
                 return (
                     <li key={i} style={{ filter: `contrast(20)` }}>

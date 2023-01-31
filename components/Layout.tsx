@@ -189,25 +189,24 @@ interface StyledBackgroundProps {
 }
 
 const StyledBackground = styled(Background)<StyledBackgroundProps>`
-list-style: none;
-                padding: 0;
-                z-index: -1;
-                position: absolute;
-                mix-blend-mode: multiplyl
-                opacity: 0.4;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: 0;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transform:
-                    ${(props) =>
-                        props.responsive === 'isMobile'
-                            ? 'none'
-                            : 'translateY(-50vh) translateX(-50vw)'};
+    list-style: none;
+    padding: 0;
+    z-index: -1;
+    position: absolute;
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: ${(props) =>
+        props.responsive === 'isMobile'
+            ? 'none'
+            : 'translateY(-50vh) translateX(-50vw)'};
 `;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
