@@ -5,7 +5,7 @@ import { keyframes } from '@emotion/react';
 import { menuSpeed } from '../styles/GlobalVariables';
 
 interface AboutImageProps {
-    background: 'default' | 'ireland' | 'jungle' | 'rocky';
+    background?: 'default' | 'ireland' | 'jungle' | 'rocky';
 }
 
 const swipe = keyframes`
