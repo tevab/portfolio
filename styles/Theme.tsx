@@ -3,8 +3,9 @@ import styled from '@emotion/styled';
 import { insidePadding, outsidePadding, footerHeight } from './GlobalVariables';
 
 interface WrapperProps {
-    variant: string;
-    responsive: string | null;
+    variant?: string;
+    responsive?: string | null;
+    currentWork?: string;
 }
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -79,6 +80,12 @@ export const Column = styled.div<ColumnrProps>`
                 : `0
                 ${insidePadding}px 0 0;`};
             height: 100%;
+        `}
+        ${(props) =>
+        props.variant === 'narrowAbout' &&
+        css`
+            padding: 0 0 90px 0;
+            overflow: hidden;
         `}
 `;
 
