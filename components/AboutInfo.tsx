@@ -1,6 +1,10 @@
 import React from 'react';
 
-const AboutInfo = () => {
+interface AboutInfoProps {
+    fact?: 'default' | 'ireland' | 'jungle' | 'rocky';
+}
+
+const AboutInfo: React.FC<AboutInfoProps> = () => {
     return (
         <>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -10,6 +14,7 @@ const AboutInfo = () => {
             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
+            <br></br>
         </>
     );
 };

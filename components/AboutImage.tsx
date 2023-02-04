@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from '@emotion/styled';
-import usePrevious from '../hooks/usePrevious';
 import { keyframes } from '@emotion/react';
 import { menuSpeed } from '../styles/GlobalVariables';
+import { AboutContext } from '../pages/about';
 
-interface AboutImageProps {
-    background?: 'default' | 'ireland' | 'jungle' | 'rocky';
+interface AboutContextType {
+    localBackground: string;
+    setLocalBackground: React.Dispatch<React.SetStateAction<string>>;
+    swipe: boolean;
+    setSwipe: React.Dispatch<React.SetStateAction<boolean>>;
+    prevBackground: string;
+    setPrevBackroud: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const swipe = keyframes`
@@ -59,46 +64,49 @@ const SlidingContainer = styled.div(
         height: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
-        left: 0,
+        left: -320,
         animation: props.swipe ? `${swipe}` : 'none',
         animationIterationCount: 1,
         animationDuration: `${menuSpeed}ms`,
-        ...(props.variant === 'hat' && { zIndex: 2 }),
+        ...(props.variant === 'hat' && { zIndex: 2, left: 0 }),
     })
 );
 
 const Hat = styled.div(
     (props: {
         variant: string;
-        background?: string;
+        localBackground?: string;
         prevBackground?: string | null;
         swipe: boolean;
     }) => ({
         position: 'absolute',
         width: `${
-            props.background === 'ireland' || props.prevBackground === 'ireland'
+            props.localBackground === 'ireland' ||
+            props.prevBackground === 'ireland'
                 ? '204px'
-                : props.background === 'jungle' ||
+                : props.localBackground === 'jungle' ||
                   props.prevBackground === 'jungle'
                 ? '200px'
-                : props.background === 'rocky' ||
+                : props.localBackground === 'rocky' ||
                   props.prevBackground === 'rocky'
                 ? '266px'
                 : null
         }`,
         height: `${
-            props.background === 'ireland' || props.prevBackground === 'ireland'
+            props.localBackground === 'ireland' ||
+            props.prevBackground === 'ireland'
                 ? '190px'
-                : props.background === 'jungle' ||
+                : props.localBackground === 'jungle' ||
                   props.prevBackground === 'jungle'
                 ? '160px'
-                : props.background === 'rocky' ||
+                : props.localBackground === 'rocky' ||
                   props.prevBackground === 'rocky'
                 ? '230px'
                 : null
         }`,
         display: `${
-            props.background === 'default' || props.prevBackground === 'default'
+            props.localBackground === 'default' ||
+            props.prevBackground === 'default'
                 ? 'none'
                 : 'block'
         }`,
@@ -107,29 +115,29 @@ const Hat = styled.div(
         backgroundRepeat: 'no-repeat',
         ...(props.variant === 'in' && {
             top: `${
-                props.background === 'ireland'
+                props.prevBackground === 'ireland'
                     ? '-79px'
-                    : props.background === 'jungle'
+                    : props.prevBackground === 'jungle'
                     ? '-34px'
-                    : props.background === 'rocky'
+                    : props.prevBackground === 'rocky'
                     ? '-49px'
                     : null
             }`,
             left: `${
-                props.background === 'ireland'
+                props.prevBackground === 'ireland'
                     ? '93px'
-                    : props.background === 'jungle'
+                    : props.prevBackground === 'jungle'
                     ? '75px'
-                    : props.background === 'rocky'
+                    : props.prevBackground === 'rocky'
                     ? '25px'
                     : null
             }`,
             backgroundImage: `url(${
-                props.background === 'ireland'
+                props.prevBackground === 'ireland'
                     ? './webp/ireland-hat.webp'
-                    : props.background === 'jungle'
+                    : props.prevBackground === 'jungle'
                     ? './webp/jungle-hat.webp'
-                    : props.background === 'rocky'
+                    : props.prevBackground === 'rocky'
                     ? './webp/rocky-wig.webp'
                     : null
             })`,
@@ -140,33 +148,32 @@ const Hat = styled.div(
 
         ...(props.variant === 'out' && {
             top: `${
-                props.prevBackground === 'ireland'
+                props.localBackground === 'ireland'
                     ? '-79px'
-                    : props.prevBackground === 'jungle'
+                    : props.localBackground === 'jungle'
                     ? '-34px'
-                    : props.prevBackground === 'rocky'
+                    : props.localBackground === 'rocky'
                     ? '-49px'
                     : null
             }`,
             right: `${
-                props.prevBackground === 'ireland'
+                props.localBackground === 'ireland'
                     ? '22px'
-                    : props.prevBackground === 'jungle'
+                    : props.localBackground === 'jungle'
                     ? '45px'
-                    : props.prevBackground === 'rocky'
+                    : props.localBackground === 'rocky'
                     ? '28px'
                     : null
             }`,
             backgroundImage: `url(${
-                props.prevBackground === 'ireland'
+                props.localBackground === 'ireland'
                     ? './webp/ireland-hat.webp'
-                    : props.prevBackground === 'jungle'
+                    : props.localBackground === 'jungle'
                     ? './webp/jungle-hat.webp'
-                    : props.prevBackground === 'rocky'
+                    : props.localBackground === 'rocky'
                     ? './webp/rocky-wig.webp'
                     : null
             })`,
-            display: props.swipe ? 'block' : 'none',
             animation: props.swipe ? `${hatSwipeIn}` : 'none',
             animationIterationCount: '1',
             animationDuration: `${menuSpeed}ms`,
@@ -177,28 +184,28 @@ const Hat = styled.div(
 const ReplacingBackground = styled.div(
     (props: {
         variant: string;
-        background?: string;
+        localBackground?: string;
         prevBackground?: string | null;
     }) => ({
         width: '320px',
         ...(props.variant === 'in' && {
-            backgroundImage: `url(${
-                props.background === 'ireland'
-                    ? './webp/ireland-bg.webp'
-                    : props.background === 'jungle'
-                    ? './webp/jungle-bg.webp'
-                    : props.background === 'rocky'
-                    ? './webp/rocky-bg.webp'
-                    : './webp/teva-bg.webp'
-            })`,
-        }),
-        ...(props.variant === 'out' && {
             backgroundImage: `url(${
                 props.prevBackground === 'ireland'
                     ? './webp/ireland-bg.webp'
                     : props.prevBackground === 'jungle'
                     ? './webp/jungle-bg.webp'
                     : props.prevBackground === 'rocky'
+                    ? './webp/rocky-bg.webp'
+                    : './webp/teva-bg.webp'
+            })`,
+        }),
+        ...(props.variant === 'out' && {
+            backgroundImage: `url(${
+                props.localBackground === 'ireland'
+                    ? './webp/ireland-bg.webp'
+                    : props.localBackground === 'jungle'
+                    ? './webp/jungle-bg.webp'
+                    : props.localBackground === 'rocky'
                     ? './webp/rocky-bg.webp'
                     : './webp/teva-bg.webp'
             })`,
@@ -217,26 +224,30 @@ const Teva = styled.div({
     zIndex: 1,
 });
 
-const AboutImage: React.FC<AboutImageProps> = ({ background }) => {
-    const [localBackground, setLocalBackground] = useState(background);
-    const [swipe, setSwipe] = useState(false);
-    const prevBackground = usePrevious(localBackground);
+const AboutImage = () => {
+    const context = useContext(AboutContext);
+    if (context === null) return null;
+    const { localBackground, swipe, setSwipe, prevBackground } =
+        context as AboutContextType;
 
     useEffect(() => {
-        setLocalBackground(background);
         setSwipe(true);
         setTimeout(() => {
             setSwipe(false);
         }, menuSpeed);
-    }, [background]);
+    }, [localBackground]);
 
     return (
         <ImageBackground>
             <SlidingContainer variant='hat' swipe={swipe}>
-                <Hat variant='in' background={prevBackground} swipe={swipe} />
+                <Hat
+                    variant='in'
+                    prevBackground={prevBackground}
+                    swipe={swipe}
+                />
                 <Hat
                     variant='out'
-                    prevBackground={localBackground}
+                    localBackground={localBackground}
                     swipe={swipe}
                 />
             </SlidingContainer>
@@ -252,7 +263,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ background }) => {
                 <SlidingContainer swipe={swipe}>
                     <ReplacingBackground
                         variant='in'
-                        background={prevBackground}
+                        prevBackground={prevBackground}
                         style={{
                             backgroundSize: 'cover',
                             backgroundPosition: 'top',
@@ -260,7 +271,7 @@ const AboutImage: React.FC<AboutImageProps> = ({ background }) => {
                     />
                     <ReplacingBackground
                         variant='out'
-                        prevBackground={localBackground}
+                        localBackground={localBackground}
                         style={{
                             backgroundSize: 'cover',
                             backgroundPosition: 'top',
