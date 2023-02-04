@@ -68,7 +68,7 @@ const SlidingContainer = styled.div(
         animation: props.swipe ? `${swipe}` : 'none',
         animationIterationCount: 1,
         animationDuration: `${menuSpeed}ms`,
-        ...(props.variant === 'hat' && { zIndex: 2, left: 0 }),
+        ...(props.variant === 'hat' && { zIndex: 2 }),
     })
 );
 
@@ -103,12 +103,6 @@ const Hat = styled.div(
                   props.prevBackground === 'rocky'
                 ? '230px'
                 : null
-        }`,
-        display: `${
-            props.localBackground === 'default' ||
-            props.prevBackground === 'default'
-                ? 'none'
-                : 'block'
         }`,
         backgroundSize: 'contain',
         backgroundPosition: 'bottom',
